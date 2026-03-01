@@ -15,16 +15,48 @@ int min(guessGame userin);
 int max(guessGame userin);
 int random_num(guessGame userin);
 void limit(guessGame userin);
+void result(guessGame userin);
 int main(){
     guessGame userin = {0,0,0,0,0};
     srand(time(NULL));
-    printf("***This a guessing number game***\n");
+    printf("Welcome to the guessing game!\n");
     userin.min = min(userin);
     userin.max = max(userin);
     userin.random_num = random_num(userin);
     limit(userin);
-
+    result(userin);
     
+    return 0;  
+}
+
+int min(guessGame userin){
+    printf("Which  minium number from you want guess: ");
+    scanf("%d", &userin.min);
+    return userin.min;
+}
+int max(guessGame userin){
+    printf("To which number: ");
+    scanf("%d", &userin.max);
+    return userin.max;
+}
+int random_num(guessGame userin){
+    int random_num = (rand() % (userin.max - userin.min + 1)) + userin.min;
+    return random_num;
+}
+void limit(guessGame userin){
+    if (abs(userin.max - userin.min) > 100){
+            printf("The range shouldn't be more than 100\n");
+            main();
+    }   
+    else if (userin.max <= userin.min){
+            printf("The max should be bigger than min\n");
+            main();
+        }
+    else {
+        return;
+    }
+}
+void result(guessGame userin){
         do{
         printf("Type your guess: ");
         scanf("%d", &userin.guess);
@@ -62,38 +94,15 @@ int main(){
         else if(userin.guess > userin.random_num && abs(userin.guess - userin.random_num) <= 5){
         printf("You are super duper close a bit lower\n");
         }
+        else if(userin.tries== 30){
+            break;
+            printf("You took too muck tries try again");
+            main();
+        }
+        
         }while(userin.guess != userin.random_num);
 
         printf("You have guessed it\n");
         printf("Its number %d\n", userin.random_num);
         printf("It took you %d tries",userin.tries);
-    return 0;  
-}
-
-int min(guessGame userin){
-    printf("Which  minium number from you want guess: ");
-    scanf("%d", &userin.min);
-    return userin.min;
-}
-int max(guessGame userin){
-    printf("To which number: ");
-    scanf("%d", &userin.max);
-    return userin.max;
-}
-int random_num(guessGame userin){
-    int random_num = (rand() % (userin.max - userin.min + 1)) + userin.min;
-    return random_num;
-}
-void limit(guessGame userin){
-    if (abs(userin.max - userin.min) > 100){
-            printf("The range shouldn't be more than 100\n");
-            limit(userin);
-    }   
-    else if (userin.max <= userin.min){
-            printf("The max should be bigger than min\n");
-            limit(userin);
-        }
-    else {
-        return;
-    }
 }
